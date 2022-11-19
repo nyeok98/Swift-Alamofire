@@ -20,6 +20,9 @@ class HomeViewController: UIViewController {
     
     var keyboardDismissTabGesture: UIGestureRecognizer = UITapGestureRecognizer(target: HomeViewController.self, action: nil)
     
+    var userData: [User]?
+    var photoData: [Photo]?
+    
     // MARK: - LIFECYCLE
 
     override func viewDidLoad() {
@@ -84,11 +87,8 @@ class HomeViewController: UIViewController {
     @IBAction func onSearchBtnClicked(_ sender: UIButton) {
         guard let userInput = searchBar.text else { return }
         
-        var urlToCall: URLRequestConvertible?
-        
         switch searchFilterSegment.selectedSegmentIndex {
         case 0:
-            urlToCall = SearchRouter.searchPhotos(term: userInput)
             AlamofireManager
                 .shared
                 // weak를 사용하는 이유는 원래 self 선언은 ARC 카운트를 증가시키지만,
@@ -98,16 +98,33 @@ class HomeViewController: UIViewController {
                     switch result {
                     case .success(let fetchedPhotos):
                         print("HomeVC - getPhotos.success - fetchedPhotos.count : \(fetchedPhotos.count)")
+                        self.photoData = fetchedPhotos
                     case .failure(let error):
                         print("HomeVC - getPhotos.failure - error : \(error.rawValue)")
                         self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                     }
                 }
         case 1:
-            urlToCall = SearchRouter.searchUsers(term: userInput)
+            AlamofireManager
+                .shared
+                // weak를 사용하는 이유는 원래 self 선언은 ARC 카운트를 증가시키지만,
+                // weak 선언시 사용후 메모리 해제를 통해 관리를 돕기 위함이다.
+                .getUsers(searchTerm: userInput) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let fetchedUsers):
+                        print("HomeVC - getUsers.success - getchedUsers.count : \(fetchedUsers.count)")
+                        self.userData = fetchedUsers
+                    case .failure(let error):
+                        print("HomeVC - getUsers.failure - error : \(error.rawValue)")
+                        self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                    }
+                }
         default:
-            urlToCall = SearchRouter.searchPhotos(term: userInput)
+            print("default")
         }
+        
+        pushVC()
     }
     
     @IBAction func filterValueChanged(_ sender: UISegmentedControl) {

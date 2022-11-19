@@ -13,12 +13,14 @@ class PhotoCollectionViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
 
     var vcTitle: String = ""
+    var photoData: [Photo]?
 
     // MARK: - LIFECYCLE
 
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = vcTitle
+        print(photoData?.count)
     }
 
     // MARK: - ACTIONS

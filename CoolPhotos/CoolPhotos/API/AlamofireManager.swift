@@ -67,4 +67,39 @@ final class AlamofireManager {
                 }
             }
     }
+
+    func getUsers(searchTerm userInput: String, completion: @escaping (Result<[User], RandomError>) -> Void) {
+        session
+            .request(SearchRouter.searchUsers(term: userInput))
+            .validate(statusCode: 200 ... 401)
+            .responseJSON { response in
+
+                guard let responseValue = response.value else { return }
+
+                let responseJSON = JSON(responseValue)
+
+                let jsonArray = responseJSON["results"]
+
+                var users = [User]()
+
+                print("jsonArray.count: \(jsonArray.count)")
+
+                for (_, subJSON): (String, JSON) in jsonArray {
+                    // Parsing data
+                    let username = subJSON["username"].string ?? ""
+                    let totalLikes = subJSON["total_likes"].intValue
+                    let profileImage = subJSON["profile_image"].string ?? ""
+
+                    let userItem = User(username: username, profileImage: profileImage, totalLikes: totalLikes)
+
+                    users.append(userItem)
+                }
+
+                if users.count > 0 {
+                    completion(.success(users))
+                } else {
+                    completion(.failure(.noContent))
+                }
+            }
+    }
 }
