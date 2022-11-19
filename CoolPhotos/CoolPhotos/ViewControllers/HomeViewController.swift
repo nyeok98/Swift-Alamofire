@@ -32,6 +32,18 @@ class HomeViewController: UIViewController {
         view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // AUTH_FAIL NOTIFICATION OBSERVER
+        NotificationCenter.default.addObserver(self, selector: #selector(showErrorPopup(notification:)), name: NSNotification.Name(rawValue: NOTIFICATION.API.AUTH_FAIL), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // AUTH_FAIL NOTIFICATION OBSERVER RELEASE
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: NOTIFICATION.API.AUTH_FAIL), object: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case SEGUE_ID.USER_LIST_VC:
@@ -70,15 +82,29 @@ class HomeViewController: UIViewController {
     // MARK: - ACTIONS
 
     @IBAction func onSearchBtnClicked(_ sender: UIButton) {
-        let url = API.BASE_URL + "search/photos"
-        
         guard let userInput = searchBar.text else { return }
-        let queryParam = ["query": userInput]
         
-        AF.request(url, method: .get, parameters: queryParam)
-            .responseJSON { response in
-                debugPrint(response)
-            }
+        var urlToCall: URLRequestConvertible?
+        
+        switch searchFilterSegment.selectedSegmentIndex {
+        case 0:
+            urlToCall = SearchRouter.searchPhotos(term: userInput)
+        case 1:
+            urlToCall = SearchRouter.searchUsers(term: userInput)
+        default:
+            urlToCall = SearchRouter.searchPhotos(term: userInput)
+        }
+        
+        if let urlConvertible = urlToCall {
+            AlamofireManager
+                .shared
+                .session
+                .request(urlConvertible)
+                .validate(statusCode: 200 ... 401)
+                .responseJSON { response in
+                    debugPrint(response)
+                }
+        }
     }
     
     @IBAction func filterValueChanged(_ sender: UISegmentedControl) {
@@ -100,6 +126,18 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - HELPER
+    
+    @objc func showErrorPopup(notification: NSNotification) {
+        print("HomeVC - showErrorPopup()")
+        
+        DispatchQueue.main.async {
+            if let data = notification.userInfo?["statusCode"] {
+                print("showErrorPopup() data: \(data)")
+                
+                self.view.makeToast("🙏 \(data) 에러 입니다.", duration: 1.0, position: .center)
+            }
+        }
+    }
 }
 
 // MARK: - extension
