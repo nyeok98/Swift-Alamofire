@@ -2,6 +2,7 @@
 
 - Use Modals between Views
 - Use Segment Control to manipulate cases
+- Use Toast-Swift for error alert
 
 
 ## It seems like...(UI completed, 2022.11.19)
