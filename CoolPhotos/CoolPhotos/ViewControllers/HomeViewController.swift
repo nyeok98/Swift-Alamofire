@@ -89,21 +89,24 @@ class HomeViewController: UIViewController {
         switch searchFilterSegment.selectedSegmentIndex {
         case 0:
             urlToCall = SearchRouter.searchPhotos(term: userInput)
+            AlamofireManager
+                .shared
+                // weak를 사용하는 이유는 원래 self 선언은 ARC 카운트를 증가시키지만,
+                // weak 선언시 사용후 메모리 해제를 통해 관리를 돕기 위함이다.
+                .getPhotos(searchTerm: userInput) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let fetchedPhotos):
+                        print("HomeVC - getPhotos.success - fetchedPhotos.count : \(fetchedPhotos.count)")
+                    case .failure(let error):
+                        print("HomeVC - getPhotos.failure - error : \(error.rawValue)")
+                        self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                    }
+                }
         case 1:
             urlToCall = SearchRouter.searchUsers(term: userInput)
         default:
             urlToCall = SearchRouter.searchPhotos(term: userInput)
-        }
-        
-        if let urlConvertible = urlToCall {
-            AlamofireManager
-                .shared
-                .session
-                .request(urlConvertible)
-                .validate(statusCode: 200 ... 401)
-                .responseJSON { response in
-                    debugPrint(response)
-                }
         }
     }
     
