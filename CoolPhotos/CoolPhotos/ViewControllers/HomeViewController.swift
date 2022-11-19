@@ -5,6 +5,7 @@
 //  Created by NYEOK on 2022/11/19.
 //
 
+import Alamofire
 import Toast_Swift
 import UIKit
 
@@ -68,8 +69,16 @@ class HomeViewController: UIViewController {
     
     // MARK: - ACTIONS
 
-    @IBAction func searchBtnTouched(_ sender: UIButton) {
-        pushVC()
+    @IBAction func onSearchBtnClicked(_ sender: UIButton) {
+        let url = API.BASE_URL + "search/photos"
+        
+        guard let userInput = searchBar.text else { return }
+        let queryParam = ["query": userInput]
+        
+        AF.request(url, method: .get, parameters: queryParam)
+            .responseJSON { response in
+                debugPrint(response)
+            }
     }
     
     @IBAction func filterValueChanged(_ sender: UISegmentedControl) {

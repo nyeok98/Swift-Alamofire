@@ -45,7 +45,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="검색"/>
                                 <connections>
-                                    <action selector="searchBtnTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tTk-x9-5Fp"/>
+                                    <action selector="onSearchBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eia-d0-2nM"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8YR-zX-vcJ">
