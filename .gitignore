@@ -88,6 +88,9 @@ iOSInjectionProject/
 *.json
 *.DS_Store
 
+# hiding Secrete Key
+*/Constants.swift
+
 #Media
 *.png
 *.mp4
