@@ -8,11 +8,11 @@
 - Inject Header and all the common parameters from Interceptor
 - Error handling from Interceptor
 - Use SwiftyJSON for JSON parsing
+- Fetching Data from HomeVC to PhotoColectionVC and UserListVC
 
 ## To-Do
 - Set CollectionView in PhotoCollecitonVC
 - Set TableView in UserListVC
-- Fetching Data from HomeVC to PhotoColectionVC and UserListVC
 
 
 ## It seems like...(UI completed, 2022.11.19)
