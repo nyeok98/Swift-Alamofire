@@ -20,7 +20,7 @@ class PhotoCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = vcTitle
-        print(photoData?.count)
+        print("PhotoCollectionVC - photoData.count: \(photoData?.count ?? 0)")
     }
 
     // MARK: - ACTIONS

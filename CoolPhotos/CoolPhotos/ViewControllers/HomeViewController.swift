@@ -55,13 +55,14 @@ class HomeViewController: UIViewController {
             guard let userInputValue = searchBar.text else { return }
             
             nextVC.vcTitle = userInputValue + "👨‍💻"
-            
+            nextVC.userData = userData
         case SEGUE_ID.PHOTO_COLLECTION_VC:
             let nextVC = segue.destination as! PhotoCollectionViewController
             
             guard let userInputValue = searchBar.text else { return }
             
             nextVC.vcTitle = userInputValue + "👀"
+            nextVC.photoData = photoData
         default:
             print("default")
         }
@@ -99,6 +100,7 @@ class HomeViewController: UIViewController {
                     case .success(let fetchedPhotos):
                         print("HomeVC - getPhotos.success - fetchedPhotos.count : \(fetchedPhotos.count)")
                         self.photoData = fetchedPhotos
+                        self.pushVC()
                     case .failure(let error):
                         print("HomeVC - getPhotos.failure - error : \(error.rawValue)")
                         self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -115,6 +117,7 @@ class HomeViewController: UIViewController {
                     case .success(let fetchedUsers):
                         print("HomeVC - getUsers.success - getchedUsers.count : \(fetchedUsers.count)")
                         self.userData = fetchedUsers
+                        self.pushVC()
                     case .failure(let error):
                         print("HomeVC - getUsers.failure - error : \(error.rawValue)")
                         self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -123,8 +126,6 @@ class HomeViewController: UIViewController {
         default:
             print("default")
         }
-        
-        pushVC()
     }
     
     @IBAction func filterValueChanged(_ sender: UISegmentedControl) {

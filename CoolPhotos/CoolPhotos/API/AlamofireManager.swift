@@ -46,8 +46,6 @@ final class AlamofireManager {
 
                 var photos = [Photo]()
 
-                print("jsonArray.count: \(jsonArray.count)")
-
                 for (_, subJSON): (String, JSON) in jsonArray {
                     // Parsing data
                     let thumbnail = subJSON["urls"]["thumb"].string ?? ""

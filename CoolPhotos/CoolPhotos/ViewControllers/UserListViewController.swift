@@ -13,12 +13,14 @@ class UserListViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
 
     var vcTitle: String = "Title"
+    var userData: [User]?
 
     // MARK: - LIFECYCLE
 
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLabel.text = vcTitle
+        print("UserListVC - userData.count: \(userData?.count)")
     }
 
     // MARK: - ACTIONS
