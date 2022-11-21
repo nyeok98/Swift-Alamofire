@@ -18,6 +18,9 @@ class HomeViewController: UIViewController {
     @IBOutlet var searchBtn: UIButton!
     @IBOutlet var searchIndicator: UIActivityIndicatorView!
     
+    
+    
+    
     var keyboardDismissTabGesture: UIGestureRecognizer = UITapGestureRecognizer(target: HomeViewController.self, action: nil)
     
     var userData: [User]?
@@ -56,6 +59,7 @@ class HomeViewController: UIViewController {
             
             nextVC.vcTitle = userInputValue + "👨‍💻"
             nextVC.userData = userData
+            
         case SEGUE_ID.PHOTO_COLLECTION_VC:
             let nextVC = segue.destination as! PhotoCollectionViewController
             
@@ -63,6 +67,7 @@ class HomeViewController: UIViewController {
             
             nextVC.vcTitle = userInputValue + "👀"
             nextVC.photoData = photoData
+            
         default:
             print("default")
         }

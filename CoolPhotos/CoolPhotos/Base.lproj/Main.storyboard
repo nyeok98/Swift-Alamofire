@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -109,18 +110,43 @@
                                     <constraint firstAttribute="width" secondItem="HEr-DM-ELB" secondAttribute="height" multiplier="39:23" constant="-18" id="ktK-XW-EPX"/>
                                 </constraints>
                             </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-Xs-axv">
+                                <rect key="frame" x="0.0" y="167" width="393" height="616"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4y8-7j-DcK">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="yHG-dr-KQ4">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="DoE-3D-ZhR">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qex-23-LPD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Qex-23-LPD" firstAttribute="trailing" secondItem="QOB-Xs-axv" secondAttribute="trailing" id="2kI-iN-3an"/>
                             <constraint firstItem="Qex-23-LPD" firstAttribute="top" secondItem="Bge-zb-x3S" secondAttribute="top" constant="-40" id="6sd-wl-WTL"/>
                             <constraint firstItem="HEr-DM-ELB" firstAttribute="centerX" secondItem="Qex-23-LPD" secondAttribute="centerX" id="XIT-Z0-azH"/>
                             <constraint firstItem="Qex-23-LPD" firstAttribute="top" secondItem="HEr-DM-ELB" secondAttribute="top" id="edJ-V3-fw3"/>
+                            <constraint firstItem="Qex-23-LPD" firstAttribute="bottom" secondItem="QOB-Xs-axv" secondAttribute="bottom" id="gXS-dR-996"/>
+                            <constraint firstItem="QOB-Xs-axv" firstAttribute="top" secondItem="Bge-zb-x3S" secondAttribute="bottom" constant="20" id="lfS-bs-XpV"/>
+                            <constraint firstItem="QOB-Xs-axv" firstAttribute="leading" secondItem="Qex-23-LPD" secondAttribute="leading" id="o8j-M4-Vlc"/>
                             <constraint firstItem="Bge-zb-x3S" firstAttribute="leading" secondItem="Qex-23-LPD" secondAttribute="leading" constant="20" id="s6B-fN-nl6"/>
                             <constraint firstItem="HEr-DM-ELB" firstAttribute="width" secondItem="3qc-Gj-p6j" secondAttribute="width" multiplier="0.198473" constant="-17.99988900000001" id="tnR-mg-AVX"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="photoCollectionView" destination="QOB-Xs-axv" id="894-KK-4e4"/>
                         <outlet property="titleLabel" destination="Bge-zb-x3S" id="fXf-Sq-qcO"/>
                     </connections>
                 </viewController>
@@ -143,7 +169,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.compact.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hJH-Jb-ALt">
-                                <rect key="frame" x="166.66666666666663" y="66" width="60" height="32"/>
+                                <rect key="frame" x="166.66666666666666" y="66" width="60" height="32"/>
                                 <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="hJH-Jb-ALt" secondAttribute="height" multiplier="39:23" constant="-18" id="LP6-7a-yE6"/>
