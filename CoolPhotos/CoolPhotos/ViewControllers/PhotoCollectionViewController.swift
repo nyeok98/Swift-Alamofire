@@ -36,7 +36,7 @@ class PhotoCollectionViewController: UIViewController {
 
 // MARK: - EXTENSIONS
 
-extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoData?.count ?? 0
     }
@@ -59,5 +59,18 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         }
 
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let size = (view.frame.width - 4) / 3
+        return CGSize(width: size, height: size)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
     }
 }
