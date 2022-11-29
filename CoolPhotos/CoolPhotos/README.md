@@ -9,12 +9,12 @@
 - Error handling from Interceptor
 - Use SwiftyJSON for JSON parsing
 - Fetching Data from HomeVC to PhotoColectionVC and UserListVC
+- Set CollectionView in PhotoCollecitonVC
 
 ## To-Do
-- Set CollectionView in PhotoCollecitonVC
 - Set TableView in UserListVC
 
 
-## It seems like...(UI completed, 2022.11.19)
+## It seems like...(UI completed, 2022.11.29)
 
-<img width="200" src="https://user-images.githubusercontent.com/57023279/202847226-69327405-ecc4-434b-ae51-cae875e07b33.gif">
+<img width="200" src="https://user-images.githubusercontent.com/57023279/204528428-422e6265-bf5c-40f5-8525-1abdfe277b7e.gif">
