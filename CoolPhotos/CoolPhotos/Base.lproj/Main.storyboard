@@ -148,11 +148,12 @@
                     <connections>
                         <outlet property="photoCollectionView" destination="QOB-Xs-axv" id="894-KK-4e4"/>
                         <outlet property="titleLabel" destination="Bge-zb-x3S" id="fXf-Sq-qcO"/>
+                        <segue destination="1bo-OP-lGb" kind="presentation" identifier="goToPhotoDetailVC" id="ugT-1v-GVN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y5F-C7-NeE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1387.0229007633586" y="-378.16901408450707"/>
+            <point key="canvasLocation" x="1387" y="-378"/>
         </scene>
         <!--User List View Controller-->
         <scene sceneID="iTe-cR-NH9">
@@ -193,6 +194,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wwd-2B-L6Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1388.5496183206105" y="320.42253521126764"/>
+        </scene>
+        <!--PhotoDetailVC-->
+        <scene sceneID="QPZ-Nj-z49">
+            <objects>
+                <viewController storyboardIdentifier="PhotoDetailVC" title="PhotoDetailVC" id="1bo-OP-lGb" customClass="PhotoDetailViewController" customModule="CoolPhotos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hU5-MY-Wg8">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="dge-jA-3na"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9i0-5e-GzK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2097" y="-378"/>
         </scene>
     </scenes>
     <resources>

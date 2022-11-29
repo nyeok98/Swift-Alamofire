@@ -46,20 +46,33 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
             return UICollectionViewCell()
         }
         let urlString = photoData?[indexPath.row].thumbnail
-        let url = URL(string: urlString ?? "")
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
 
-            DispatchQueue.main.sync {
-                if let imageData = data {
-                    let image = UIImage(data: imageData)
-                    cell.cellImageView.image = image
-                }
-            }
+        getPhoto(urlString ?? "") { image in
+            cell.cellImageView.image = image
         }
 
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToPhotoDetailVC", sender: self)
+    }
+
+    func getPhoto(_ urlString: String, _ completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global().async {
+            let url = URL(string: urlString)
+            let data = try? Data(contentsOf: url!)
+            if let imageData = data {
+                let image = UIImage(data: imageData)
+
+                DispatchQueue.main.sync {
+                    completion(image)
+                }
+            }
+        }
+    }
+
+    // MARK: - Cell Layout
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = (view.frame.width - 4) / 3
