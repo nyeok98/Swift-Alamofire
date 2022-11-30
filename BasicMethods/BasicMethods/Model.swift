@@ -12,3 +12,16 @@ struct DataModel: Decodable {
     var title: String
     var userId: Int
 }
+
+struct User: Decodable {
+    var id: Int
+    var name: String
+    var username: String
+    var email: String
+    var address: Address
+}
+
+struct Address: Decodable {
+    var street: String
+    var suite: String
+}
