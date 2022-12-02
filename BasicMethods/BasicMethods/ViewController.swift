@@ -23,6 +23,7 @@ class ViewController: UIViewController {
 
     @IBAction func callAlamofireBtn(_ sender: Any) {
         getPhoto()
+        postPhoto()
     }
 
     func getPhoto() {
@@ -46,4 +47,33 @@ class ViewController: UIViewController {
                 }
             }
     }
+    
+    func postPhoto() {
+        let url = "https://httpbin.org/post"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
+        
+        let params = ["id" : "hello123", "pw" : "123123!"] as Dictionary
+        
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http error")
+        }
+        
+        AF.request(request).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("success")
+                print(response.value)
+            case .failure:
+                print("Alamofire error")
+            }
+        }
+        
+        
+    }
+    
 }

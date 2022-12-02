@@ -25,3 +25,8 @@ struct Address: Decodable {
     var street: String
     var suite: String
 }
+
+struct Data: Decodable {
+    var name: String
+    var age: String
+}
