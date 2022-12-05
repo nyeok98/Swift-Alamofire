@@ -5,6 +5,7 @@
 //  Created by NYEOK on 2022/11/19.
 //
 
+import RxSwift
 import UIKit
 
 class PhotoCollectionViewController: UIViewController {
@@ -47,10 +48,20 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         }
         let urlString = photoData?[indexPath.row].thumbnail
 
-        getPhoto(urlString ?? "") { image in
-            cell.cellImageView.image = image
-        }
-
+        getPhoto(urlString ?? "")
+            .subscribe { event in
+                switch event {
+                case .next(let cellPhoto):
+                    cell.cellImageView.image = cellPhoto
+                case .completed:
+                    break
+                case .error:
+                    break
+                }
+            }
+            .dispose()
+        
+        
         return cell
     }
 
@@ -58,17 +69,21 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         performSegue(withIdentifier: "goToPhotoDetailVC", sender: self)
     }
 
-    func getPhoto(_ urlString: String, _ completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global().async {
-            let url = URL(string: urlString)
-            let data = try? Data(contentsOf: url!)
-            if let imageData = data {
-                let image = UIImage(data: imageData)
+    func getPhoto(_ urlString: String) -> Observable<UIImage?> {
+        return Observable.create { emitter in
+            DispatchQueue.global().async {
+                let url = URL(string: urlString)
+                let data = try? Data(contentsOf: url!)
+                if let imageData = data {
+                    let cellPhoto = UIImage(data: imageData)
 
-                DispatchQueue.main.sync {
-                    completion(image)
+                    DispatchQueue.main.sync {
+                        emitter.onNext(cellPhoto)
+                    }
                 }
             }
+            
+            return Disposables.create()
         }
     }
 
