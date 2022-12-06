@@ -51,6 +51,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         let urlString = photoData?[indexPath.row].thumbnail
 
         let _ = getPhoto(urlString ?? "")
+            .observe(on: MainScheduler.instance)
             .subscribe { event in
                 switch event {
                 case .next(let cellPhoto):
@@ -72,17 +73,20 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
 
     func getPhoto(_ urlString: String) -> Observable<UIImage?> {
         return Observable.create { emitter in
-            DispatchQueue.global().async {
-                let url = URL(string: urlString)
-                let data = try? Data(contentsOf: url!)
-                if let imageData = data {
-                    let cellPhoto = UIImage(data: imageData)
-
-                    DispatchQueue.main.sync {
+            let url = URL(string: urlString)
+            let task = URLSession.shared.dataTask(with: url!) { data, _, err in
+                guard err == nil else {
+                    emitter.onError(err!)
+                    return
+                }
+                if let data = data {
+                    if let cellPhoto = UIImage(data: data) {
                         emitter.onNext(cellPhoto)
                     }
                 }
             }
+
+            task.resume()
 
             return Disposables.create()
         }
