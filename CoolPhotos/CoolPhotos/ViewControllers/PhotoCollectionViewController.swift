@@ -17,6 +17,8 @@ class PhotoCollectionViewController: UIViewController {
     var vcTitle: String = ""
     var photoData: [Photo]?
 
+    var disposableBag = DisposeBag()
+
     // MARK: - LIFECYCLE
 
     override func viewDidLoad() {
@@ -48,7 +50,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         }
         let urlString = photoData?[indexPath.row].thumbnail
 
-        getPhoto(urlString ?? "")
+        let _ = getPhoto(urlString ?? "")
             .subscribe { event in
                 switch event {
                 case .next(let cellPhoto):
@@ -59,9 +61,8 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
                     break
                 }
             }
-            .dispose()
-        
-        
+            .disposed(by: disposableBag)
+
         return cell
     }
 
@@ -82,7 +83,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
                     }
                 }
             }
-            
+
             return Disposables.create()
         }
     }
