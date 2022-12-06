@@ -50,7 +50,7 @@ extension PhotoCollectionViewController: UICollectionViewDelegate, UICollectionV
         }
         let urlString = photoData?[indexPath.row].thumbnail
 
-        let _ = getPhoto(urlString ?? "")
+        getPhoto(urlString ?? "")
             .observe(on: MainScheduler.instance)
             .subscribe { event in
                 switch event {
